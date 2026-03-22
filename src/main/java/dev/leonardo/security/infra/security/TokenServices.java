@@ -13,39 +13,38 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 @Service
-public class TokenService {
+public class TokenServices {
 
-    @Value("${api.security.token.secret}")
+    @Value("${api.security.token}")
     private String secret;
 
     public String generateToken(User user) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256("secret");
+            Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
-                    .withIssuer("security-api")
+                    .withIssuer("NOME-DO-SERVICO")
                     .withSubject(user.getEmail())
-                    .withExpiresAt(generateExpirationDate())
+                    .withExpiresAt(gerateExpirateDate())
                     .sign(algorithm);
-        } catch (JWTCreationException exception) {
-            throw new RuntimeException("Error while authenticating", exception);
+        } catch (JWTCreationException e) {
+            throw new RuntimeException("Error while creating token", e);
         }
     }
 
-    private Instant generateExpirationDate() {
+    public Instant gerateExpirateDate() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
 
-    public String validadeToken(String token) {
+    public String validateToken(String token) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256("secret");
+            Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("security-api")
+                    .withIssuer("NOME-DO-SERVICO")
                     .build()
                     .verify(token)
                     .getSubject();
-
         } catch (JWTVerificationException e) {
-           return null;
+            return null;
         }
     }
 }
