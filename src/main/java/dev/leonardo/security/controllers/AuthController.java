@@ -7,7 +7,6 @@ import dev.leonardo.security.dto.ResponseDto;
 import dev.leonardo.security.infra.security.TokenService;
 import dev.leonardo.security.repositories.UserRepository;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
