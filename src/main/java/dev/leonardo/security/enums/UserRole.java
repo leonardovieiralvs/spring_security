@@ -1,6 +1,6 @@
 package dev.leonardo.security.enums;
 
-public enum UserRoles {
+public enum UserRole {
     ADMIN,
     USER
 }
